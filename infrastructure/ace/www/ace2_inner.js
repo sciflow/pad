@@ -1016,7 +1016,7 @@ function OUTER(gscope) {
     //if (! top.BEFORE) top.BEFORE = [];
     //top.BEFORE.push(magicdom.root.dom.innerHTML);
 
-    //if (! isEditable) return; // and don't reschedule
+    if (! isEditable) return; // and don't reschedule
 
     if (inInternationalComposition) {
       // don't do idle input incorporation during international input composition
@@ -1790,7 +1790,11 @@ function OUTER(gscope) {
   function canApplyChangesetToDocument(changes) {
     return Changeset.oldLen(changes) == rep.alltext.length;
   }
-
+  
+  /**
+   * apply changes to document  
+   * @param {string} changes Z:59>0|2=6*0=h$
+   **/ 
   function performDocumentApplyChangeset(changes, insertsAfterSelection) {
     doRepApplyChangeset(changes, insertsAfterSelection);
 
@@ -1816,7 +1820,7 @@ function OUTER(gscope) {
 	return map(rep.lines.slice(start, end), function(e) { return e.text+'\n'; });
       }
     };
-
+    //rebuild lines
     Changeset.mutateTextLines(changes, linesMutatee);
 
     checkALines();
@@ -4600,5 +4604,10 @@ function OUTER(gscope) {
   }
 
 };
-
-OUTER(this);
+try{
+	OUTER(this);
+} catch(e){
+	window.onload = function(){
+		OUTER(this);
+	}
+}
