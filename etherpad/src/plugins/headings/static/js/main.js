@@ -1,9 +1,97 @@
+if(typeof dojo != "undefined"){
+  dojo.require("dijit.form.Button");
+  dojo.require("dijit.Menu");
+}
+
 function headingsInit() {
   this.hooks = ['aceAttribsToClasses', 'aceCreateDomLine', 'aceInitInnerdocbodyHead', 'collectContentPre'];
   this.aceAttribsToClasses = aceAttribsToClasses;
   this.aceCreateDomLine = aceCreateDomLine;
   this.collectContentPre = collectContentPre;
   this.aceInitInnerdocbodyHead = aceInitInnerdocbodyHead;
+}
+
+if(typeof dojo != "undefined")
+{
+  dojo.addOnLoad(function() {
+  
+    var menu = new dijit.Menu({
+      style: "display: none;"
+    });
+  
+    var menuItem0 = new dijit.MenuItem({
+      label: "Normal Text",
+      onClick: function() {
+        dijit.byId("headingsPluginComboBox").setLabel(this.label);
+        headingsPluginComboBoxChanged('normalText');
+      }
+    });
+    menu.addChild(menuItem0);
+
+    var menuItem1 = new dijit.MenuItem({
+      label: "Heading 1",
+      onClick: function() {
+        dijit.byId("headingsPluginComboBox").setLabel(this.label);
+        headingsPluginComboBoxChanged('heading1');
+      }
+    });
+    menu.addChild(menuItem1);
+  
+    var menuItem2 = new dijit.MenuItem({
+      label: "Heading 2",
+      onClick: function() {
+        dijit.byId("headingsPluginComboBox").setLabel(this.label);
+        headingsPluginComboBoxChanged('heading2');
+      }
+    });
+    menu.addChild(menuItem2);
+  
+    var menuItem3 = new dijit.MenuItem({
+      label: "Heading 3",
+      onClick: function() {
+        dijit.byId("headingsPluginComboBox").setLabel(this.label);
+        headingsPluginComboBoxChanged('heading3');
+      }
+    });
+    menu.addChild(menuItem3);
+    
+    var menuItem4 = new dijit.MenuItem({
+      label: "Heading 4",
+      onClick: function() {
+        dijit.byId("headingsPluginComboBox").setLabel(this.label);
+        headingsPluginComboBoxChanged('heading4');
+      }
+    });
+    menu.addChild(menuItem4);
+  
+    var menuItem5 = new dijit.MenuItem({
+      label: "Heading 5",
+      onClick: function() {
+        dijit.byId("headingsPluginComboBox").setLabel(this.label);
+        headingsPluginComboBoxChanged('heading5');
+      }
+    });
+    menu.addChild(menuItem5);
+  
+    var menuItem6 = new dijit.MenuItem({
+      label: "Heading 6",
+      onClick: function() {
+        dijit.byId("headingsPluginComboBox").setLabel(this.label);
+        headingsPluginComboBoxChanged('heading6');
+      }
+    });
+    menu.addChild(menuItem6);
+            
+    var button = new dijit.form.ComboButton({
+      dropDown: menu,
+      id : "headingsPluginComboBox"
+    });
+  
+    dojo.byId("headingsPluginComboBoxDiv").appendChild(button.domNode);
+    dijit.byId("headingsPluginComboBox").setLabel(
+      dijit.byId("headingsPluginComboBox").dropDown.getChildren()[0].label
+    );
+  });
 }
 
 function aceInitInnerdocbodyHead(args) {
@@ -41,38 +129,34 @@ function aceCreateDomLine(args) {
 
 }
 
-function headingsPluginDropdownListChanged(dropDownList) {
+function headingsPluginComboBoxChanged(arg) {
 
   var attributeName = null;
 
-  /*
-   * The location of an entry in that drop-down list should identify it uniquely.
-   * Using the value would lead to problems when translating to other languages.
-   */
-  switch (dropDownList.options.selectedIndex) {
-    case 0:
+  switch (arg) {
+    case 'normalText':
       break;
-    case 1:
+    case 'heading1':
       attributeName= 'heading1';
       break;
-    case 2:
+    case 'heading2':
       attributeName= 'heading2';
       break;
-    case 3:
+    case 'heading3':
       attributeName= 'heading3';
       break;
-    case 4:
+    case 'heading4':
       attributeName= 'heading4';
       break;
-    case 5:
+    case 'heading5':
       attributeName= 'heading5';
       break;
-    case 6:
+    case 'heading6':
       attributeName= 'heading6';
       break;
     default:
       return;
-}
+  }
 
   padeditor.ace.callWithAce(function (ace) {
     rep = ace.ace_getRep();
